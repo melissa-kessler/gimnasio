@@ -6,20 +6,60 @@ import Socio_Reg from '../src/clases/Socio_Reg';
 import Socio_VIP from '../src/clases/Socio_VIP';
 
 
+describe('Agrega un socio a la lista de socios.', () => {
+    let gimnasio: Gimnasio;
+    let socio: Socio;
+
+    beforeEach(() => {
+        gimnasio = new Gimnasio();
+    });
+
+    test('Agrega un socio regular.', () => {
+        socio = new Socio_Reg(1, 1000);
+        gimnasio.agregarSocio(socio);
+        expect(gimnasio.getSocios()[0]).toBe(socio);
+    });
+
+    test('Agrega un socio VIP.', () => {
+        socio = new Socio_VIP(1, 3000);
+        gimnasio.agregarSocio(socio);
+        expect(gimnasio.getSocios()[0]).toBe(socio);
+    });
+})
+
+
+describe('Agrega un entrenador a la lista de entrenadores.', () => {
+    let gimnasio: Gimnasio;
+    let entrenador: Entrenador;
+
+    beforeEach(() => {
+        gimnasio = new Gimnasio();
+    });
+
+    test('Agrega un entrenador.', () => {
+        entrenador = new Entrenador(1);
+        gimnasio.agregarEntrenador(entrenador);
+        expect(gimnasio.getEntrenadores()[0]).toBe(entrenador);
+    })
+}); 
+
 
 describe('Calcula los ingresos totales del gimnasio.', () => {
     let gimnasio: Gimnasio;
+    let entrenador: Entrenador;
+    let socio: Socio;
+    let sociovip: Socio;
+    let clase: Clase;
 
-    beforeEach(() => {
-    gimnasio = new Gimnasio();
+    beforeAll(() => {
+        gimnasio = new Gimnasio();
+        entrenador = new Entrenador(1);
+        socio = new Socio_Reg(1, 1000);
+        sociovip = new Socio_VIP(1, 3000);
+        clase = new Clase(entrenador, 20, 500);
     });
 
     test('Con un socio regular inscripto en 1 clase y un socio VIP.', () => {
-        const entrenador: Entrenador = new Entrenador(1);
-        const socio: Socio = new Socio_Reg(1, 1000);
-        const sociovip: Socio = new Socio_VIP(1, 3000);
-        const clase: Clase = new Clase(entrenador, 20, 500);
-
         gimnasio.agregarSocio(socio);
         gimnasio.agregarSocio(sociovip);
         gimnasio.agregarEntrenador(entrenador);
