@@ -4,7 +4,7 @@ import Socio from "./Socio";
 export default class Clase {
     private nombre: string;
     private horario: number;
-    private entrenador: Entrenador;
+    private entrenador?: Entrenador;
     private capMax: number;
     private inscriptos: Array<Socio>;
     private costo: number;
@@ -33,7 +33,7 @@ export default class Clase {
         this.horario = horario;
     }
 
-    public getEntrenador(): Entrenador {
+    public getEntrenador(): Entrenador | undefined {
         return this.entrenador;
     }
 
@@ -58,12 +58,12 @@ export default class Clase {
     }
 
 
-    constructor(ent: Entrenador, cap: number, cos: number) {
+    constructor(capacidadMax: number, costo: number) {
         this.nombre = "";
         this.horario = 0;
-        this.entrenador = ent;
-        this.capMax = cap;
+        this.entrenador = undefined;
+        this.capMax = capacidadMax;
         this.inscriptos = [];
-        this.costo = cos;
+        this.costo = costo;
     }
 }

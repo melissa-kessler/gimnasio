@@ -16,7 +16,7 @@ const sociovip: Socio = new Socio_VIP(1, 3000);
 
 const plan: Plan = new Plan();
 
-const clase: Clase = new Clase(entrenador, 20, 500);
+const clase: Clase = new Clase(20, 500);
 
 gimnasio.agregarSocio(socio);
 
@@ -25,6 +25,8 @@ gimnasio.agregarSocio(sociovip);
 gimnasio.agregarEntrenador(entrenador);
 
 gimnasio.agregarClase(clase);
+
+clase.setEntrenador(entrenador);
 
 try {
     gimnasio.inscribirSocio(socio, clase);

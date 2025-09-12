@@ -38,31 +38,129 @@ describe('Agrega un entrenador a la lista de entrenadores.', () => {
 
     test('Agrega un entrenador.', () => {
         entrenador = new Entrenador(1);
+
         gimnasio.agregarEntrenador(entrenador);
+
         expect(gimnasio.getEntrenadores()[0]).toBe(entrenador);
     })
 }); 
 
 
-describe('Calcula los ingresos totales del gimnasio.', () => {
+describe('Agrega una clase a la lista de clases.', () => {
+    let gimnasio: Gimnasio;
+    let clase: Clase;
+
+    beforeEach(() => {
+        gimnasio = new Gimnasio();
+    });
+
+    test('Agrega una clase.', () => {
+        clase = new Clase(20, 500);
+
+        gimnasio.agregarClase(clase);
+
+        expect(gimnasio.getClases()[0]).toBe(clase);
+    })
+});
+
+
+describe('Se fija si una clase esta completa o no.', () => {
+    let gimnasio: Gimnasio;
+    let clase: Clase;
+    let completa: boolean;
+
+    beforeEach(() => {
+        gimnasio = new Gimnasio();
+    });
+    
+    test('Devuelve true si la clase esta completa.', () => {
+        clase = new Clase(2, 500);
+        let socio1 = new Socio_Reg(1, 1000);
+        let socio2 = new Socio_Reg(2, 1000);
+
+        clase.setInscriptos([socio1, socio2]);
+
+        completa = gimnasio.claseCompleta(clase);
+
+        expect(completa).toBe(true);
+    });
+
+    test('Devuelve false si la clase no esta completa.', () => {
+        let socio1 = new Socio_Reg(1, 1000);
+
+        clase.setInscriptos([socio1]);
+
+        completa = gimnasio.claseCompleta(clase);
+
+        expect(completa).toBe(false);
+    });
+})
+
+
+describe('Inscribe un socio a una clase.', () => {
+    let gimnasio: Gimnasio;
+    let socio: Socio;
+    let clase: Clase;
+
+    beforeEach(() => {
+        gimnasio = new Gimnasio();
+    });
+
+    test('Agrega un socio regular a una clase.', () => {
+        clase = new Clase(20, 500);
+        socio = new Socio_Reg(1, 1000);
+
+        gimnasio.agregarSocio(socio);
+        gimnasio.agregarClase(clase);
+
+        gimnasio.inscribirSocio(socio, clase);
+
+        gimnasio.inscribirSocio(socio, clase);
+
+        expect(gimnasio.getClases()[0].getInscriptos()[0]).toBe(socio);
+    });
+});
+
+
+describe('Asigna un entrenador a un socio.', () => {
     let gimnasio: Gimnasio;
     let entrenador: Entrenador;
+    let socio: Socio;
+
+    beforeEach(() => {
+        gimnasio = new Gimnasio();
+    });
+
+    test('A un socio regular.', () => {
+        socio = new Socio_Reg(1, 1000);
+        entrenador = new Entrenador(1);
+
+        gimnasio.agregarEntrenador(entrenador);
+
+        gimnasio.asignarEntrenador(entrenador, socio);
+
+        expect(socio.getEntrenador?.()).toBe(entrenador);
+    })
+})
+
+
+describe('Calcula los ingresos totales del gimnasio.', () => {
+    let gimnasio: Gimnasio;
     let socio: Socio;
     let sociovip: Socio;
     let clase: Clase;
 
     beforeAll(() => {
         gimnasio = new Gimnasio();
-        entrenador = new Entrenador(1);
-        socio = new Socio_Reg(1, 1000);
-        sociovip = new Socio_VIP(1, 3000);
-        clase = new Clase(entrenador, 20, 500);
     });
 
     test('Con un socio regular inscripto en 1 clase y un socio VIP.', () => {
+        socio = new Socio_Reg(1, 1000);
+        sociovip = new Socio_VIP(1, 3000);
+        clase = new Clase(20, 500);
+        
         gimnasio.agregarSocio(socio);
         gimnasio.agregarSocio(sociovip);
-        gimnasio.agregarEntrenador(entrenador);
         gimnasio.agregarClase(clase);
 
         gimnasio.inscribirSocio(socio, clase); 
